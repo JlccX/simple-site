@@ -20,3 +20,7 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p ~/.vnc && \
     echo "myPassword" | vncpasswd -f > ~/.vnc/passwd && \
     chmod 600 ~/.vnc/passwd
+
+# Create the xstartup file for VNC
+RUN echo "#!/bin/bash\nxrdb $HOME/.Xresources\nstartxfce4 &" > ~/.vnc/xstartup && \
+    chmod +x ~/.vnc/xstartup
