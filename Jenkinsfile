@@ -19,9 +19,14 @@ pipeline {
                               branches: [[name: params.COMMIT_ID]],
                               userRemoteConfigs: [[url: 'https://github.com/JlccX/simple-site.git']]
                     ])
-                    echo "The current folder path is:"
-                    sh "pwd"
-                    sh "ls"
+                    sh """
+                        echo 'The current workspace folder path is:'
+                        pwd
+                        echo "The current folder content is:"
+                        ls
+                        echo "The current commid ID hash is:"
+                        git rev-parse HEAD
+                    """
                 }
             }
         }
