@@ -30,6 +30,7 @@ pipeline {
             steps {
                 script {
                     // Clone the repository and checkout the specified commit
+                    sh "echo '++++++++++++++++++++++ Checkout the repository +++++++++++++++++++++++++++++++++++++++++++++'"
                     checkout([$class: 'GitSCM',
                               branches: [[name: COMMIT_ID]],
                               userRemoteConfigs: [[url: 'https://github.com/JlccX/simple-site.git']]
