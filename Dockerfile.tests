@@ -24,3 +24,12 @@ RUN mkdir -p ~/.vnc && \
 # Create the xstartup file for VNC
 RUN echo "#!/bin/bash\nxrdb $HOME/.Xresources\nstartxfce4 &" > ~/.vnc/xstartup && \
     chmod +x ~/.vnc/xstartup
+
+# Expose the VNC port
+EXPOSE 5901
+
+# Expose the RDP port
+EXPOSE 3389
+
+# Start the VNC server and XRDP
+CMD ["/bin/bash", "-c", "vncserver :1 -geometry 1920x1080 -depth 24 && /usr/sbin/xrdp && tail -f /dev/null"]
