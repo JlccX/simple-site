@@ -26,6 +26,8 @@ pipeline {
                         ls
                         echo "The current commid ID hash is:"
                         git rev-parse HEAD
+                        echo "The commit ID comment is:"
+                        git log -1 --pretty=%B
                     """
                 }
             }
