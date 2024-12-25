@@ -42,7 +42,7 @@ pipeline {
         stage('Verify Commit') {
             steps {
                 script {
-                    echo "Checked out to commit: ${COMMIT_ID}"
+                    echo "Checked out to commit: ${COMMIT_ID} "
                 }
             }
         }
