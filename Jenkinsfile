@@ -32,7 +32,7 @@ pipeline {
                     // Clone the repository and checkout the specified commit
                     checkout([$class: 'GitSCM',
                               branches: [[name: COMMIT_ID]],
-                              userRemoteConfigs: [[url: 'https://github.com/your-repo.git']]
+                              userRemoteConfigs: [[url: 'https://github.com/JlccX/simple-site.git']]
                     ])
                 }
             }
