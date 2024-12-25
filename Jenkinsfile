@@ -19,6 +19,9 @@ pipeline {
                               branches: [[name: params.COMMIT_ID]],
                               userRemoteConfigs: [[url: 'https://github.com/JlccX/simple-site.git']]
                     ])
+                    echo "The current folder path is:"
+                    sh "pwd"
+                    sh "ls"
                 }
             }
         }
