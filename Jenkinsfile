@@ -9,13 +9,18 @@ pipeline {
         stage('Input Commit ID or Use Latest') {
             steps {
                 script {
-                    timeout(time: 2, unit: 'MINUTES') {
-                        input message: 'Enter the Git commit ID', parameters: [string(name: 'COMMIT_ID', defaultValue: '', description: 'Git Commit ID')]
-                    }
-                    if (!params.COMMIT_ID) {
-                        echo "Timeout reached. Fetching the latest commit ID."
-                        COMMIT_ID = sh(returnStdout: true, script: 'git ls-remote https://github.com/your-repo.git HEAD | awk \'{print $1}\'').trim()
-                        echo "Using latest commit ID: ${COMMIT_ID}"
+                    try {
+                        timeout(time: 2, unit: 'MINUTES') {
+                            input message: 'Enter the Git commit ID', parameters: [string(name: 'COMMIT_ID', defaultValue: '', description: 'Git Commit ID')]
+                        }
+                     } catch (e) {
+                        if (e instanceof org.jenkinsci.plugins.workflow.steps.FlowInterruptedException) {
+                            echo "Timeout reached. Getting the latest commit ID."
+                            COMMIT_ID = sh(returnStdout: true, script: 'git ls-remote https://github.com/JlccX/simple-site.git HEAD | awk \'{print $1}\'').trim()
+                            echo "Using latest commit ID: ${COMMIT_ID}"
+                        } else {
+                            throw e
+                        }
                     }
                 }
             }
