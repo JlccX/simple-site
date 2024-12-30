@@ -61,6 +61,15 @@ pipeline {
         }
 
 
+        stage('Artillery') {
+            steps {
+                script {
+                    docker.image('artilleryio/artillery:latest').inside {
+                        sh 'artillery --version'
+                    }
+                }
+            }
+        }
         
     }
 
