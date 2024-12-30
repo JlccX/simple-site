@@ -65,9 +65,7 @@ pipeline {
         stage('Artillery') {
             steps {
                 script {
-                    docker.image('artilleryio/artillery:latest').inside {
-                       sh 'artillery --version'
-                    }
+                    sh 'docker run --rm --entrypoint="" artilleryio/artillery:latest artillery --version'
                 }
             }
         }
