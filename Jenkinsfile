@@ -66,7 +66,7 @@ pipeline {
             steps {
                 script {
                     docker.image('artilleryio/artillery:latest').inside {
-                        sh 'artillery --version'
+                       sh '/bin/sh -c "artillery --version"'
                     }
                 }
             }
