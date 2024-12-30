@@ -1,9 +1,7 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'COMMIT_ID', defaultValue: '', description: 'Enter the Git commit ID to checkout')
-    }
+    env.CommitID = ""
 
     stages {
         stage('Input Commit ID or Use Latest') {
@@ -11,13 +9,13 @@ pipeline {
                 script {
                     try {
                         timeout(time: 2, unit: 'MINUTES') {
-                            input message: 'Enter the Git commit ID', parameters: [string(name: 'COMMIT_ID', defaultValue: '', description: 'Git Commit ID')]
+                            env.CommitID = input message: 'Enter the Git commit ID', parameters: [string(defaultValue: '', description: 'Please add the Git Commit ID required or leave it empty to get the latest one by default.')]
                         }
                      } catch (e) {
                         if (e instanceof org.jenkinsci.plugins.workflow.steps.FlowInterruptedException) {
                             echo "Timeout reached. Getting the latest commit ID."
-                            COMMIT_ID = sh(returnStdout: true, script: 'git ls-remote https://github.com/JlccX/simple-site.git HEAD | awk \'{print $1}\'').trim()
-                            echo "Using latest commit ID: ${COMMIT_ID}"
+                            env.CommitID = sh(returnStdout: true, script: 'git ls-remote https://github.com/JlccX/simple-site.git HEAD | awk \'{print $1}\'').trim()
+                            echo "Using latest commit ID: ${env.CommitID}"
                         } else {
                             throw e
                         }
@@ -32,7 +30,7 @@ pipeline {
                     // Clone the repository and checkout the specified commit
                     sh "echo '++++++++++++++++++++++ Checkout the repository +++++++++++++++++++++++++++++++++++++++++++++'"
                     checkout([$class: 'GitSCM',
-                              branches: [[name: COMMIT_ID]],
+                              branches: [[name: env.CommitID]],
                               userRemoteConfigs: [[url: 'https://github.com/JlccX/simple-site.git']]
                     ])
                 }
@@ -42,7 +40,7 @@ pipeline {
         stage('Verify Commit') {
             steps {
                 script {
-                    echo "Checked out to commit: ${COMMIT_ID} "
+                    echo "Checked out to commit: ${env.CommitID} "
                 }
             }
         }
