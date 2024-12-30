@@ -14,6 +14,10 @@ pipeline {
                      } catch (e) {
                         if (e instanceof org.jenkinsci.plugins.workflow.steps.FlowInterruptedException) {
                             echo "Timeout reached. Getting the latest commit ID."
+                            sh """
+                            echo "The latest commit ID is:"
+                            git ls-remote https://github.com/JlccX/simple-site.git HEAD
+                            """
                             env.CommitID = sh(returnStdout: true, script: 'git ls-remote https://github.com/JlccX/simple-site.git HEAD | awk \'{print $1}\'').trim()
                             echo "Using latest commit ID: ${env.CommitID}"
                         } else {
