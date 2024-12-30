@@ -9,7 +9,7 @@ pipeline {
                 script {
                     try {
                         timeout(time: 2, unit: 'MINUTES') {
-                            env.CommitID = input message: 'Enter the Git commit ID', parameters: [string(defaultValue: '', description: 'Please add the Git Commit ID required or leave it empty to get the latest one by default.')]
+                            env.CommitID = input message: 'Enter the Git commit ID', parameters: [string(defaultValue: '', description: 'Please add the Git Commit ID required or leave it empty to get the latest one by default.', name: 'userInput')]
                         }
                      } catch (e) {
                         if (e instanceof org.jenkinsci.plugins.workflow.steps.FlowInterruptedException) {
