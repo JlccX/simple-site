@@ -54,7 +54,6 @@ pipeline {
             steps {
                 script {
                     docker.image('mcr.microsoft.com/playwright:latest').inside {
-                        #sh 'npx playwright --version'
                         // Use a temporary npm cache directory to avoid permission issues
                         sh 'NPM_CONFIG_CACHE=$(mktemp -d) npx playwright --version'
                     }
