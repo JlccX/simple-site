@@ -17,6 +17,7 @@ pipeline {
                             sh """
                             echo "The latest commit ID is:"
                             git ls-remote https://github.com/JlccX/simple-site.git HEAD
+                            git rev-parse "${env.BRANCH_NAME}"
                             """
                             env.CommitID = sh(returnStdout: true, script: 'git ls-remote https://github.com/JlccX/simple-site.git HEAD | awk \'{print $1}\'').trim()
                             echo "Using latest commit ID: ${env.CommitID}"
