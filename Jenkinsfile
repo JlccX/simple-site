@@ -48,6 +48,20 @@ pipeline {
                 }
             }
         }
+
+
+        stage('Playwright') {
+            steps {
+                script {
+                    docker.image('mcr.microsoft.com/playwright:latest').inside {
+                        sh 'npx playwright --version'
+                    }
+                }
+            }
+        }
+
+
+        
     }
 
     post {
