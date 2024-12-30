@@ -1,7 +1,7 @@
+env.CommitID = ""
+
 pipeline {
     agent any
-
-    env.CommitID = ""
 
     stages {
         stage('Input Commit ID or Use Latest') {
